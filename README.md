@@ -31,9 +31,9 @@
 - 팔로우 기능 + 메시지 기능
 
 ### 스택 : 
-- figma, git
-- spring boot + JPA 
-- mySql
+- Figma, Git
+- Spring Boot + JPA 
+- MySql
 
 ### 사용한 탬플릿 : 
 * https://bootstrapthemes.co/items/free-bootstrap-templates/

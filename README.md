@@ -70,7 +70,7 @@ www.community.demo
 * log4jdbc
 * thymeleaf-layout
 
-database
+Test DB
 
 ```sql
 create database web1400;

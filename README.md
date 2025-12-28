@@ -2,7 +2,7 @@
 ---
 
 ## 📖 프로젝트 소개
-💡 **Only open source available**
+💡 **Only open source available** <br />
 실명제 기반의 신뢰도 높은 커뮤니티 플랫폼입니다.
 기존 익명 커뮤니티의 문제점을 해결하고자 실명제와 광고 없는 환경을 제공합니다.
 

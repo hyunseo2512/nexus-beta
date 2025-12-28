@@ -16,7 +16,8 @@
 * stack overflow : https://stackoverflow.com/
 * dcinside : https://www.dcinside.com/
 * 번개장터 : https://m.bunjang.co.kr/
-
+* velog : https://velog.io/
+등
 
 **사이트 이름** : ?
 

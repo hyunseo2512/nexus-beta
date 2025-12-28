@@ -69,3 +69,16 @@ www.community.demo
 * Spring Data JPA
 * log4jdbc
 * thymeleaf-layout
+
+database
+
+```sql
+create database web1400;
+
+use mysql;
+
+create user 'webUser'@'localhost' identified by 'mysql';
+grant all privileges on web1400.* to 'webUser'@'localhost';
+flush privileges;
+
+```

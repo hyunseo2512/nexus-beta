@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -34,5 +35,18 @@ public class BoardServiceImpl implements BoardService{
                     .map(board -> convertEntityToDto(board))
                     .toList();
         return boardDTOList;
+    }
+
+    @Override
+    public BoardDTO getDetail(long bno) {
+        Optional<Board> optional = boardRepository.findById(bno);
+        if(optional.isPresent()){
+            Board board = optional.get();
+            board.setReadCount(board.getReadCount()+1);
+            BoardDTO boardDTO = convertEntityToDto(board);
+
+            return boardDTO;
+        }
+        return null;
     }
 }

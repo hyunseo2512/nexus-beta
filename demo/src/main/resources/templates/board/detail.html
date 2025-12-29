@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content" class="container-md" th:with="board = ${boardDTO}">
+
+  <h3> [ no. [[${board.bno}]] ] detail page</h3>
+  <form action="/board/modify" method="post" id="modForm" enctype="multipart/form-data">
+    <input type="hidden" name="bno" th:value="${board.bno}">
+    <div class="mb-3">
+      <label for="t" class="form-label">Title</label>
+      <input type="text" name="title" th:value="${board.title}" readonly class="form-control" id="t" placeholder="title...">
+    </div>
+    <div class="mb-3">
+      <label for="w" class="form-label">Writer</label>
+      <input type="text" name="writer" th:value="${board.writer}" readonly class="form-control" id="w" placeholder="writer...">
+    </div>
+    <div class="mb-3">
+      <label for="r" class="form-label">regDate</label>
+      <input type="text" name="regDate" th:value="${board.regDate}" readonly class="form-control" id="r" placeholder="writer...">
+    </div>
+    <div class="mb-3">
+      <label for="c" class="form-label">Content</label>
+      <textarea class="form-control" name="content" id="c" readonly rows="5" cols="30" placeholder="Content...">[[${board.content}]]</textarea>
+    </div>
+  </form>
+</div>

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
@@ -25,12 +26,18 @@ public class BoardController {
     @GetMapping("/register")
     public void register(){}
 
-    @PostMapping()
+    @PostMapping("/register")
     public String register(BoardDTO boardDTO, Model model){
          Long bno = boardService.insert(boardDTO);
          log.info(">>> insert id >> {}", bno);
         List<Board> boardList = new ArrayList<>();
         model.addAttribute("board", boardList);
         return "redirect:/";
+    }
+
+    @GetMapping("/detail")
+    public void detail(@RequestParam("bno") long bno, Model model){
+        BoardDTO boardDTO = boardService.getDetail(bno);
+        model.addAttribute("boardDTO" , boardDTO);
     }
 }

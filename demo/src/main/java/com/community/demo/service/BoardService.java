@@ -40,4 +40,6 @@ public interface BoardService {
     Long insert(BoardDTO boardDTO);
 
     List<BoardDTO> getList();
+
+    BoardDTO getDetail(long bno);
 }

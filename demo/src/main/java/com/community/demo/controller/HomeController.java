@@ -22,7 +22,7 @@ public class HomeController {
 
         List<BoardDTO> boardList = boardService.getList();
         log.info(">>> boardList >> {}", boardList);
-        model.addAttribute("board", boardList);
+        model.addAttribute("boardList", boardList);
 
         return "index";
     }

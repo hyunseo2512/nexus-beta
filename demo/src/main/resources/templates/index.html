@@ -10,20 +10,20 @@
             <!-- Blog entries-->
             <div class="col-lg-8">
                 <!-- Featured blog post-->
-                [[${board}]]
-                    <!-- 이중 주석 -->
-<!--                <div class="card mb-4" th:each="bo : ${board}">-->
-<!--                    <div class="card-header d-flex ">-->
-<!--                        <h2 class="card-title me-auto p-2">[[${bo.tiile}]]</h2>-->
-<!--                        <div class="small text-muted p-2">[[${bo.writer}]]</div>-->
-<!--                        <div class="small text-muted p-2">[[${#strings.substring(bo.regDate,0,10)}]]</div>-->
-<!--                    </div>-->
-<!--                    <img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." />-->
-<!--                    <div class="card-body">-->
-<!--                        <p class="card-text">[[${bo.content}]]</p>-->
-<!--                        <a class="btn btn-primary" href="#!">Read more →</a>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <a th:each="board : ${boardList}" th:href="@{/board/detail(bno=${board.bno})}">
+                <div class="card mb-4">
+                    <div class="card-header d-flex ">
+                        <h2 class="card-title me-auto p-2">[[${board.title}]]</h2>
+                        <div class="small text-muted p-2">[[${board.writer}]]</div>
+                        <div class="small text-muted p-2">[[${#strings.substring(board.regDate,0,10)}]]</div>
+                    </div>
+                    <img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." />
+                    <div class="card-body">
+                        <p class="card-text">[[${board.content}]]</p>
+                        <a class="btn btn-primary" href="#!">Read more →</a>
+                    </div>
+                </div>
+                </a>
                 <!-- Pagination -->
                 <nav aria-label="Pagination">
                     <hr class="my-0" />

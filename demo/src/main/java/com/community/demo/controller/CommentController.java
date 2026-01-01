@@ -26,5 +26,11 @@ public class CommentController {
         return cno > 0 ? new ResponseEntity<String>("1", HttpStatus.OK)
                 : new ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    @GetMapping(value = "/list/{bno}/",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CommentDTO>> list(@PathVariable("bno") Long bno){
+        List<CommentDTO> list = commentService.getList(bno);
+        return new ResponseEntity<List<CommentDTO>>(list,HttpStatus.OK);
+    }
 
 }

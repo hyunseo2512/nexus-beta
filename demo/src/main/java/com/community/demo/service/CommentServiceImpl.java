@@ -38,44 +38,14 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.save(convertDtoToEntity(commentDTO)).getCno();
     }
 
-//    @Override
-//    public List<CommentDTO> getList(Long bno) {
-//        /* findBy ** => ** 테이블 안에 있는 모든 칼럼
-//        *   select * from comment where ** = ? */
-//        List<Comment> list = commentRepository.findByBno(bno);
-//
-//        return list.stream()
-//                .map(comment -> convertEntityToDto(comment))
-//                .toList();
-//    }
-//
-//    @Override
-//    public Page<CommentDTO> getList(Long bno, int page) {
-//        // select * from comment where bno = #{bno}
-//        // order by bno desc limit {page} , 5
-//        Pageable pageable = PageRequest.of(page-1,5, Sort.by("cno").descending());
-//
-//        Page<Comment> list = commentRepository.findByBno(bno, pageable);
-//        return list.map(this::convertEntityToDto);
-//    }
-//
-//    @Transactional
-//    @Override
-//    public long modify(CommentDTO commentDTO) {
-//        Comment comment = commentRepository.findById(commentDTO.getCno())
-//                .orElseThrow(() -> new EntityNotFoundException("해당 댓글을 찾을 수 없습니다."));
-//        comment.setContent(commentDTO.getContent());
-//        return comment.getCno();
-//    }
-//
-//    @Transactional
-//    @Override
-//    public void remove(long cno) {
-//        Comment comment = commentRepository.findById(cno)
-//                .orElseThrow(()-> new EntityNotFoundException());
-//        Board board = boardRepository.findById(comment.getBno())
-//                .orElseThrow(()-> new EntityNotFoundException());
-//        board.setCmtQty(board.getCmtQty()-1);
-//        commentRepository.deleteById(cno);
-//    }
+    @Override
+    public List<CommentDTO> getList(Long bno) {
+        List<Comment> list = commentRepository.findByBno(bno);
+
+        return list.stream()
+                .map(comment -> convertEntityToDto(comment))
+                .toList();
+    }
+
+
 }

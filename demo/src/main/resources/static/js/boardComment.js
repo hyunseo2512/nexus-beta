@@ -30,15 +30,13 @@ document.getElementById("cmtAddBtn").addEventListener("click", () => {
 
 // 화면에 출력하는 함수
 // 만약에 페이지가 안들어오면 옵셔널 1
-function spreadCommentList(bno, page = 1) {
-  commentListFromServer(bno, page).then((result) => {
+function spreadCommentList(bno) {
+  commentListFromServer(bno).then((result) => {
     console.log(result);
     const ul = document.getElementById("cmtListArea");
     if (result.list.length > 0) {
       // 댓글이 있을 경우
-      if (page == 1) {
-        ul.innerHTML = ""; // 1page만 값 비우고 새로 채우기
-      }
+
       let li = "";
       for (let comment of result.list) {
         li += `<li class="list-group-item" data-cno=${comment.cno}>`;
@@ -54,19 +52,6 @@ function spreadCommentList(bno, page = 1) {
         li += `</li>`;
       }
       ul.innerHTML += li;
-
-      // page 처리
-      const moreBtn = document.getElementById("moreBtn");
-
-      // 아직 리스트가 더 있다면... 버튼 표시
-      // result => list + pageHandler
-      // result => pageNo / totalPage
-      if (result.pageNo < result.totalPage) {
-        moreBtn.style.visibility = "visible"; // 표시
-        moreBtn.dataset.page = page + 1;
-      } else {
-        moreBtn.style.visibility = "hidden"; // 숨김
-      }
     } else {
       // 댓글이 없을 경우
       ul.innerHTML = `<li class="list-group-item">Comment List Empty</li>`;
@@ -151,9 +136,9 @@ async function updateCommentToServer(modData) {
 }
 
 // list
-async function commentListFromServer(bno, page) {
+async function commentListFromServer(bno) {
   try {
-    const resp = await fetch("/comment/list/" + bno + "/" + page);
+    const resp = await fetch("/comment/list/" + bno);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -169,7 +154,6 @@ async function postCommentToServer(cmtData) {
       method: "post",
       headers: {
         "content-type": "application/json; charset=utf-8",
-        [csrfHeader] : csrfToken
       },
       body: JSON.stringify(cmtData),
     };

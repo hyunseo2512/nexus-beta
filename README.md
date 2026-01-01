@@ -90,3 +90,7 @@ grant all privileges on web1400.* to 'webUser'@'localhost';
 flush privileges;
 
 ```
+
+페이지네이션 
+오프셋 기반 -> 커서 기반
+

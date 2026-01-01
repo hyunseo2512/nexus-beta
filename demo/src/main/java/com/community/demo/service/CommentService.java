@@ -32,11 +32,6 @@ public interface CommentService {
 
     long post(CommentDTO commentDTO);
 
-//    List<CommentDTO> getList(Long bno);
-//
-//    long modify(CommentDTO commentDTO);
-//
-//    void remove(long cno);
-//
-//    Page<CommentDTO> getList(Long bno, int page);
+    List<CommentDTO> getList(Long bno);
+
 }

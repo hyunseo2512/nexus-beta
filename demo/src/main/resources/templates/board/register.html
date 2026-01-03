@@ -4,17 +4,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 
-<div layout:fragment="content" class="container-md mt-5">
+<div id="registerForm" layout:fragment="content" class="container-md mt-5">
     <h3>게시물 만들기</h3>
     <form action="/board/register" method="post" enctype="multipart/form-data">
         <div class="mb-3 mt-5">
             <label for="t" class="form-label"></label>
             <input type="text" name="title" class="form-control" id="t" placeholder="제목*">
         </div>
-<!--        <div class="mb-3">-->
-<!--            <label for="c" class="form-label">Content</label>-->
-<!--            <textarea class="form-control" name="content" id="c" rows="5" cols="30" placeholder="Content..."></textarea>-->
-<!--        </div>-->
 
         <!-- TOAST UI -->
         <div class="mb-3">
@@ -30,15 +26,6 @@
                    class="form-control" id="w" >
         </div>
 
-<!--        &lt;!&ndash; file upload 추가&ndash;&gt;-->
-<!--        <div class="mb-3">-->
-<!--            <input type="file" name="files" class="form-control" id="file" multiple style="visibility: hidden">-->
-<!--            <button type="button" class="btn btn-outline-dark" id="trigger">file upload</button>-->
-<!--        </div>-->
-<!--        &lt;!&ndash;file list print&ndash;&gt;-->
-<!--        <div class="mb-3" id="fileZone">-->
-
-<!--        </div>-->
         <button class="btn btn-primary" id="regBtn">게시하기</button>
     </form>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
@@ -50,7 +37,26 @@
                 height: '600px',
                 initialEditType: 'wysiwyg',
                 previewStyle: 'vertical',
-                hideModeSwitch: true
+                hideModeSwitch: true,
+                 hooks: {
+                    addImageBlobHook: async (blob, callback) => {
+                        // FormData로 이미지 업로드
+                        const formData = new FormData();
+                        formData.append('image', blob);
+
+                        try {
+                            const response = await fetch('/upload/image', {
+                                method: 'POST',
+                                body: formData
+                            });
+                            const data = await response.json();
+                            // 업로드된 이미지 URL을 에디터에 삽입
+                            callback(data.url, '이미지');
+                        } catch (error) {
+                            console.error('이미지 업로드 실패:', error);
+                        }
+                    }
+                }
             });
 
              document.querySelector('#registerForm').addEventListener('submit', function(e) {

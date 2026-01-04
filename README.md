@@ -1,8 +1,7 @@
-Notion : https://www.notion.so/forum-project-2de9b47f69c5806b95b5d81941a10bb4?source=copy_link
-
-
 # 🌐 WEB PROJECT 
 ---
+
+Notion : https://www.notion.so/forum-project-2de9b47f69c5806b95b5d81941a10bb4?source=copy_link
 
 ## 📖 프로젝트 소개
 💡 **Only open source available** <br />

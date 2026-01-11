@@ -81,6 +81,23 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* ------------------------수정 모달 ------------------------------ */
+/*  둥글게 및 그림자 강화 */
+ .modal-content {
+   border-radius: 15px;
+ }
+.modal-header {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  background: linear-gradient(90deg, #4DA9FF, #9D56FF) !important; /* NEXUS 그라데이션 */
+}
+#cmtTextMod:focus {
+  border-color: #4DA9FF;
+  box-shadow: 0 0 0 0.25rem rgba(77, 169, 255, 0.25);
+}
+/* -------------------------------------------------------------- */
+
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;

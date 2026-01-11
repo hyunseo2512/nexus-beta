@@ -93,7 +93,29 @@
         </div>
     </div>
 
-
+    <!--  수정 모달 추가  -->
+    <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="commentModalLabel">
+                        <i class="fas fa-edit me-2"></i>댓글 수정
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-4">
+                    <div class="mb-3">
+                        <label for="cmtTextMod" class="form-label fw-bold text-muted">수정할 내용을 입력하세요</label>
+                        <textarea class="form-control" id="cmtTextMod" rows="4" placeholder="내용을 입력해주세요."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">취소</button>
+                    <button type="button" id="cmtModBtn" class="btn btn-primary rounded-pill px-4">수정 완료</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script th:inline="javascript">
         const bnoValue = [[${board.bno}]];

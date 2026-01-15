@@ -21,7 +21,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String index(@RequestParam(value = "lastBno", required = false) Long lastBno,
-                        HttpServletRequest request, Model model) {
+            HttpServletRequest request, Model model) {
 
         List<BoardDTO> boardList = boardService.getListWithCursor(lastBno, 5);
         model.addAttribute("boardList", boardList);
@@ -35,5 +35,9 @@ public class HomeController {
         // 브라우저 직접 접속 시에는 전체 페이지 리턴
         return "index";
     }
-}
 
+    @GetMapping("/chat")
+    public String chat() {
+        return "chat/chat";
+    }
+}

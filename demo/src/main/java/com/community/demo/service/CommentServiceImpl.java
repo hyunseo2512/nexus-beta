@@ -31,7 +31,7 @@ public class CommentServiceImpl implements CommentService {
         // save()
         // 해당 comment에 board 객체를 가져와서 cmtQty + 1 업데이트
         Board board = boardRepository.findById(commentDTO.getBno())
-                .orElseThrow(()-> new EntityNotFoundException());
+                .orElseThrow(() -> new EntityNotFoundException());
         board.setCmtQty(board.getCmtQty() + 1);
 
         return commentRepository.save(convertDtoToEntity(commentDTO)).getCno();
@@ -47,14 +47,31 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public int modify(CommentDTO commentDTO) {
-        return 0;
+        // modify
+        Comment comment = commentRepository.findById(commentDTO.getCno())
+                .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
+        comment.setContent(commentDTO.getContent());
+        // modify 메서드는 Dirty Checking에 의해 트랜잭션 종료 시 업데이트 쿼리가 실행됨
+        // 하지만 명시적으로 save를 호출해도 무방하며, 성공 여부를 반환하기 위해 간단히 처리
+        commentRepository.save(comment);
+        return 1;
     }
 
     @Override
+    @Transactional
     public int remove(Long cno) {
-        return 0;
+        // remove
+        Comment comment = commentRepository.findById(cno)
+                .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
+
+        // Board의 댓글 수 감소
+        Board board = boardRepository.findById(comment.getBno())
+                .orElseThrow(() -> new EntityNotFoundException("Board not found"));
+        board.setCmtQty(Math.max(0, board.getCmtQty() - 1));
+
+        commentRepository.delete(comment);
+        return 1;
     }
-
-
 }

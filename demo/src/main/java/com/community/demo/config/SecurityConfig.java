@@ -25,7 +25,7 @@ public class SecurityConfig {
 
     // 1. PasswordEncoder (기존 유지)
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
@@ -52,10 +52,10 @@ public class SecurityConfig {
                         .requestMatchers("/user/list").hasAnyRole("ADMIN")
                         .requestMatchers("/", "/dist/**", "/js/**", "/image/**", "/upload/**",
                                 "/board/detail", "/comment/list/**",
-                                "/user/join", "/user/login", "/error/**", "/view"
-                        ).permitAll()
-                        .anyRequest().authenticated()
-                )
+                                "/user/join", "/user/login", "/error/**", "/view",
+                                "/chat", "/ws-chat/**")
+                        .permitAll()
+                        .anyRequest().authenticated())
                 // 시큐리티가 위에서 만든 authenticationProvider를 사용하도록 자동으로 설정됩니다.
                 .formLogin(login -> login
                         .usernameParameter("email")
@@ -63,26 +63,23 @@ public class SecurityConfig {
                         .loginPage("/user/login")
                         .successHandler(authenticationSuccessHandler())
                         .failureHandler(authenticationFailureHandler())
-                        .permitAll()
-                )
+                        .permitAll())
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/user/login")
-                        .defaultSuccessUrl("/", true)
-                )
+                        .defaultSuccessUrl("/", true))
                 .logout(logout -> logout
                         .logoutUrl("/user/logout")
-                        .logoutSuccessUrl("/")
-                )
+                        .logoutSuccessUrl("/"))
                 .build();
     }
 
     @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler(){
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return new LoginSuccessHandler();
     }
 
     @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler(){
+    public AuthenticationFailureHandler authenticationFailureHandler() {
         return new LoginFailuerHandler();
     }
 }

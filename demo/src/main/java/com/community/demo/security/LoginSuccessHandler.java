@@ -29,7 +29,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+            Authentication authentication) throws IOException, ServletException {
 
         // 디버깅용 로그: 핸들러 진입 확인
         System.out.println(">>> LoginSuccessHandler 진입 완료: " + authentication.getName());
@@ -89,16 +89,16 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             var oAuth2User = (org.springframework.security.oauth2.core.user.OAuth2User) principal;
             var attributes = oAuth2User.getAttributes();
 
-            // Google
+            // 구글
             if (attributes.containsKey("email")) {
                 return (String) attributes.get("email");
             }
-            // Naver
+            // 네이버
             if (attributes.containsKey("response")) {
                 var response = (java.util.Map<String, Object>) attributes.get("response");
                 return (String) response.get("email");
             }
-            // Kakao
+            // 카카오
             if (attributes.containsKey("kakao_account")) {
                 var kakaoAccount = (java.util.Map<String, Object>) attributes.get("kakao_account");
                 return (String) kakaoAccount.get("email");

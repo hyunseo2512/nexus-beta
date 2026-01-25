@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout}">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
 
 <div layout:fragment="content" class="container mt-5">
     <div class="row">
@@ -11,7 +9,8 @@
 
             <div id="board-container">
                 <th:block th:fragment="boardItems">
-                    <div th:each="board : ${boardList}" class="board-item card mb-4 shadow-sm border-0" th:data-bno="${board.bno}">
+                    <div th:each="board : ${boardList}" class="board-item card mb-4 shadow-sm border-0"
+                        th:data-bno="${board.bno}">
                         <div class="card-header bg-white py-3 d-flex align-items-center">
                             <h5 class="fw-bold mb-0 me-auto">[[${board.title}]]</h5>
                             <div class="small text-muted">
@@ -21,19 +20,17 @@
                         </div>
 
                         <div class="ratio ratio-21x9 overflow-hidden bg-light">
-                            <img class="card-img-top object-fit-cover"
-                                 th:src="${(board.fileList != null and !board.fileList.isEmpty())
+                            <img class="card-img-top object-fit-cover" th:src="${(board.fileList != null and !board.fileList.isEmpty())
                                           ? '/upload/' + board.fileList[0].saveDir + '/' + board.fileList[0].uuid + '_' + board.fileList[0].fileName
-                                          : 'https://dummyimage.com/850x350/dee2e6/6c757d.jpg'}"
-                                 alt="게시글 이미지" />
+                                          : 'https://dummyimage.com/850x350/dee2e6/6c757d.jpg'}" alt="게시글 이미지" />
                         </div>
 
                         <div class="card-body">
                             <p class="card-text text-truncate-2 text-secondary">[[${board.content}]]</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <a class="btn btn-primary btn-sm rounded-pill px-4"
-                                   th:href="@{/board/detail(bno=${board.bno})}"
-                                   th:onclick="saveRecentView([[${board.bno}]], [[${board.title}]])">상세보기</a>
+                                    th:href="@{/board/detail(bno=${board.bno})}"
+                                    th:onclick="saveRecentView([[${board.bno}]], [[${board.title}]])">상세보기</a>
                                 <small class="text-muted">
                                     <i class="fas fa-eye me-1"></i>[[${board.readCount}]]
                                     <i class="fas fa-comment ms-2 me-1"></i>[[${board.cmtQty}]]
@@ -82,10 +79,12 @@
             overflow: hidden;
             min-height: 3rem;
         }
+
         .object-fit-cover {
             object-fit: cover;
             transition: transform 0.3s ease;
         }
+
         .board-item:hover .object-fit-cover {
             transform: scale(1.03);
         }
@@ -96,15 +95,15 @@
         function saveRecentView(bno, title) {
             let recent = JSON.parse(localStorage.getItem('recentViews') || '[]');
             recent = recent.filter(item => item.bno !== bno); // 중복 제거
-            recent.unshift({bno, title}); // 앞에 추가
-            if(recent.length > 5) recent.pop(); // 최대 5개 유지
+            recent.unshift({ bno, title }); // 앞에 추가
+            if (recent.length > 5) recent.pop(); // 최대 5개 유지
             localStorage.setItem('recentViews', JSON.stringify(recent));
         }
 
         function renderRecentViews() {
             const container = document.getElementById('recent-view-list');
             const recent = JSON.parse(localStorage.getItem('recentViews') || '[]');
-            if(recent.length === 0) {
+            if (recent.length === 0) {
                 container.innerHTML = '<li class="list-group-item text-muted small py-3 text-center">방문 기록이 없습니다.</li>';
                 return;
             }
@@ -134,38 +133,59 @@
             const lastItem = boardItems[boardItems.length - 1];
             const lastBno = lastItem.dataset.bno;
 
+            if (!lastBno) {
+                console.error("Last BNO not found");
+                return;
+            }
+
             isFetching = true;
             document.getElementById('loading-spinner').style.display = 'inline-block';
 
+            // 현재 URL에서 keyword 파라미터 추출
+            const urlParams = new URLSearchParams(window.location.search);
+            const keyword = urlParams.get('keyword');
+
+            let url = `/?lastBno=${lastBno}`;
+            if (keyword) {
+                url += `&keyword=${encodeURIComponent(keyword)}`;
+            }
+
+            console.log("Fetching next page: " + url); // 디버깅용 로그
+
             // 서버에 Fragment만 요청 (X-Requested-With 헤더 포함)
-            fetch(`/?lastBno=${lastBno}`, {
+            fetch(url, {
                 headers: { 'X-Requested-With': 'XMLHttpRequest' }
             })
-            .then(res => {
-                if(!res.ok) throw new Error("로드 실패");
-                return res.text();
-            })
-            .then(html => {
-                if (html.trim().length < 20) { // 더이상 데이터가 없음
-                    hasMore = false;
-                    document.getElementById('scroll-trigger').innerHTML = '<div class="text-muted small">모든 게시물을 다 읽었습니다.</div>';
-                } else {
-                    document.getElementById('board-container').insertAdjacentHTML('beforeend', html);
-                }
-            })
-            .catch(err => console.error(err))
-            .finally(() => {
-                isFetching = false;
-                document.getElementById('loading-spinner').style.display = 'none';
-            });
+                .then(res => {
+                    if (!res.ok) throw new Error("로드 실패 Status: " + res.status);
+                    return res.text();
+                })
+                .then(html => {
+                    if (!html || html.trim().length < 20) { // 더이상 데이터가 없음
+                        hasMore = false;
+                        observer.unobserve(document.getElementById('scroll-trigger')); // 관찰 중단
+                        document.getElementById('scroll-trigger').innerHTML = '<div class="text-muted small mt-4">모든 게시물을 다 읽었습니다.</div>';
+                    } else {
+                        document.getElementById('board-container').insertAdjacentHTML('beforeend', html);
+                    }
+                })
+                .catch(err => {
+                    console.error("Infinite scroll error:", err);
+                    hasMore = false; // 에러 발생 시 중단
+                })
+                .finally(() => {
+                    isFetching = false;
+                    document.getElementById('loading-spinner').style.display = 'none';
+                });
         }
 
         // 초기 실행
         window.onload = () => {
             renderRecentViews();
             const trigger = document.getElementById('scroll-trigger');
-            if(trigger) observer.observe(trigger);
+            if (trigger) observer.observe(trigger);
         };
     </script>
 </th:block>
+
 </html>

@@ -1,97 +1,90 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout_auth}">
 <div layout:fragment="content" class="container-md">
-    <div id="layoutAuthentication">
-        <div id="layoutAuthentication_content">
-            <main>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-5">
-                            <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                <div class="card-header navbar-brand d-flex align-items-center">
-                                    <svg class="mx-2" width="35" height="35" viewBox="0 0 100 100" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <defs>
-                                            <linearGradient id="nexus_orb_grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                                <stop offset="0%" stop-color="#4DA9FF"/>
-                                                <stop offset="100%" stop-color="#9D56FF"/>
-                                            </linearGradient>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="card-header navbar-brand d-flex align-items-center">
+                        <svg class="mx-2" width="35" height="35" viewBox="0 0 100 100" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="nexus_orb_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#4DA9FF" />
+                                    <stop offset="100%" stop-color="#9D56FF" />
+                                </linearGradient>
 
-                                            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                                                <feGaussianBlur stdDeviation="2" result="blur"/>
-                                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                                            </filter>
-                                        </defs>
+                                <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="2" result="blur" />
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                </filter>
+                            </defs>
 
-                                        <g filter="url(#glow)">
-                                            <ellipse cx="50" cy="50" rx="20" ry="45" stroke="url(#nexus_orb_grad)"
-                                                     stroke-width="2.5" transform="rotate(0, 50, 50)"/>
-                                            <ellipse cx="50" cy="50" rx="20" ry="45" stroke="url(#nexus_orb_grad)"
-                                                     stroke-width="2.5" transform="rotate(60, 50, 50)"/>
-                                            <ellipse cx="50" cy="50" rx="20" ry="45" stroke="url(#nexus_orb_grad)"
-                                                     stroke-width="2.5" transform="rotate(-60, 50, 50)"/>
+                            <g filter="url(#glow)">
+                                <ellipse cx="50" cy="50" rx="20" ry="45" stroke="url(#nexus_orb_grad)"
+                                    stroke-width="2.5" transform="rotate(0, 50, 50)" />
+                                <ellipse cx="50" cy="50" rx="20" ry="45" stroke="url(#nexus_orb_grad)"
+                                    stroke-width="2.5" transform="rotate(60, 50, 50)" />
+                                <ellipse cx="50" cy="50" rx="20" ry="45" stroke="url(#nexus_orb_grad)"
+                                    stroke-width="2.5" transform="rotate(-60, 50, 50)" />
 
-                                            <circle cx="50" cy="50" r="8" fill="url(#nexus_orb_grad)"/>
-                                            <circle cx="50" cy="50" r="4" fill="white" fill-opacity="0.8"/>
-                                        </g>
-                                    </svg>
-                                    <span class="nexus-brand-text">Nexus</span>
-                                </div>
-                                <div class="card-body">
-                                    <form th:action="@{/user/login}" method="post">
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputEmail" name="email"
-                                                   type="email" placeholder="name@example.com" required/>
-                                            <label for="inputEmail">Email address</label>
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputPassword" name="pwd"
-                                                   type="password" placeholder="Password" required/>
-                                            <label for="inputPassword">Password</label>
-                                        </div>
-
-                                        <div class="d-flex align-items-center justify-content-between mt-4 mb-3">
-                                            <a class="small" th:href="@{/user/password}">Forgot Password?</a>
-                                            <button type="submit" class="btn btn-primary px-4">Login</button>
-                                        </div>
-
-                                        <div class="position-relative my-4">
-                                            <hr>
-                                            <span class="position-absolute top-50 start-50 translate-middle bg-white px-2 small text-muted">OR</span>
-                                        </div>
-
-                                        <div class="d-grid gap-2">
-                                            <a th:href="@{/oauth2/authorization/google}" class="btn btn-dark"
-                                               style="text-transform: none">
-                                                <img width="18px" style="margin-bottom:3px; margin-right:10px"
-                                                     alt="Google sign-in"
-                                                     src="https://img.icons8.com/color/48/000000/google-logo.png"/>
-                                                Login with Google
-                                            </a>
-                                            <a th:href="@{/oauth2/authorization/naver}" class="btn btn-success"
-                                               style="background-color: #03C75A; border: none;">
-                                                <span class="fw-bold">N</span> <span
-                                                    class="ms-2">Login with Naver</span>
-                                            </a>
-                                            <a th:href="@{/oauth2/authorization/kakao}" class="btn btn-warning"
-                                               style="background-color: #FEE500; border: none; color: #191919;">
-                                                <i class="fas fa-comment me-2"></i> Login with Kakao
-                                            </a>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="card-footer text-center py-3">
-                                    <div class="small"><a th:href="@{/user/join}">Need an account? Sign up!</a>
-                                    </div>
-                                </div>
+                                <circle cx="50" cy="50" r="8" fill="url(#nexus_orb_grad)" />
+                                <circle cx="50" cy="50" r="4" fill="white" fill-opacity="0.8" />
+                            </g>
+                        </svg>
+                        <span class="nexus-brand-text">Nexus</span>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/user/login}" method="post">
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="inputEmail" name="email" type="email"
+                                    placeholder="name@example.com" required />
+                                <label for="inputEmail">Email address</label>
                             </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="inputPassword" name="pwd" type="password"
+                                    placeholder="Password" required />
+                                <label for="inputPassword">Password</label>
+                            </div>
+
+                            <div class="d-flex align-items-center justify-content-between mt-4 mb-3">
+                                <a class="small" th:href="@{/user/password}">Forgot Password?</a>
+                                <button type="submit" class="btn btn-primary px-4">Login</button>
+                            </div>
+
+                            <div class="position-relative my-4">
+                                <hr>
+                                <span
+                                    class="position-absolute top-50 start-50 translate-middle bg-white px-2 small text-muted">OR</span>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <a th:href="@{/oauth2/authorization/google}" class="btn btn-dark"
+                                    style="text-transform: none">
+                                    <img width="18px" style="margin-bottom:3px; margin-right:10px" alt="Google sign-in"
+                                        src="https://img.icons8.com/color/48/000000/google-logo.png" />
+                                    Login with Google
+                                </a>
+                                <a th:href="@{/oauth2/authorization/naver}" class="btn btn-success"
+                                    style="background-color: #03C75A; border: none;">
+                                    <span class="fw-bold">N</span> <span class="ms-2">Login with
+                                        Naver</span>
+                                </a>
+                                <a th:href="@{/oauth2/authorization/kakao}" class="btn btn-warning"
+                                    style="background-color: #FEE500; border: none; color: #191919;">
+                                    <i class="fas fa-comment me-2"></i> Login with Kakao
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center py-3">
+                        <div class="small"><a th:href="@{/user/join}">Need an account? Sign up!</a>
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
         </div>
     </div>
+</div>
 </div>

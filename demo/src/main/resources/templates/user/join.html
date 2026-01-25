@@ -1,110 +1,171 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout_auth}">
 
 <div layout:fragment="content" class="container-md">
-    <div id="layoutAuthentication">
-        <div id="layoutAuthentication_content">
-            <main>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-7">
-                            <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                <div class="card-header navbar-brand d-flex align-items-center">
-                                    <svg class="mx-2" width="35" height="35" viewBox="0 0 100 100" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <defs>
-                                            <linearGradient id="nexus_orb_grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                                <stop offset="0%" stop-color="#4DA9FF"/>
-                                                <stop offset="100%" stop-color="#9D56FF"/>
-                                            </linearGradient>
 
-                                            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                                                <feGaussianBlur stdDeviation="2" result="blur"/>
-                                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                                            </filter>
-                                        </defs>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="card-header navbar-brand d-flex align-items-center">
+                        <svg class="mx-2" width="35" height="35" viewBox="0 0 100 100" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="nexus_orb_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#4DA9FF" />
+                                    <stop offset="100%" stop-color="#9D56FF" />
+                                </linearGradient>
 
-                                        <g filter="url(#glow)">
-                                            <ellipse cx="50" cy="50" rx="20" ry="45" stroke="url(#nexus_orb_grad)"
-                                                     stroke-width="2.5" transform="rotate(0, 50, 50)"/>
-                                            <ellipse cx="50" cy="50" rx="20" ry="45" stroke="url(#nexus_orb_grad)"
-                                                     stroke-width="2.5" transform="rotate(60, 50, 50)"/>
-                                            <ellipse cx="50" cy="50" rx="20" ry="45" stroke="url(#nexus_orb_grad)"
-                                                     stroke-width="2.5" transform="rotate(-60, 50, 50)"/>
+                                <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="2" result="blur" />
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                </filter>
+                            </defs>
 
-                                            <circle cx="50" cy="50" r="8" fill="url(#nexus_orb_grad)"/>
-                                            <circle cx="50" cy="50" r="4" fill="white" fill-opacity="0.8"/>
-                                        </g>
-                                    </svg>
-                                    <span class="nexus-brand-text">Nexus</span>
+                            <g filter="url(#glow)">
+                                <ellipse cx="50" cy="50" rx="20" ry="45" stroke="url(#nexus_orb_grad)"
+                                    stroke-width="2.5" transform="rotate(0, 50, 50)" />
+                                <ellipse cx="50" cy="50" rx="20" ry="45" stroke="url(#nexus_orb_grad)"
+                                    stroke-width="2.5" transform="rotate(60, 50, 50)" />
+                                <ellipse cx="50" cy="50" rx="20" ry="45" stroke="url(#nexus_orb_grad)"
+                                    stroke-width="2.5" transform="rotate(-60, 50, 50)" />
+
+                                <circle cx="50" cy="50" r="8" fill="url(#nexus_orb_grad)" />
+                                <circle cx="50" cy="50" r="4" fill="white" fill-opacity="0.8" />
+                            </g>
+                        </svg>
+                        <span class="nexus-brand-text">Nexus</span>
+                    </div>
+                    <div class="card-body">
+                        <form action="/user/join" method="post">
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="inputNickName" name="nickName" type="text"
+                                        placeholder="Enter your name" />
+                                    <label for="inputNickName">Name (Nickname)</label>
                                 </div>
-                                <div class="card-body">
-                                    <form action="/user/join" method="post">
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="inputFirstName" name="firstName" type="text" placeholder="Enter your first name" />
-                                                    <label for="inputFirstName">First name</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-floating">
-                                                    <input class="form-control" id="inputLastName" name="lastName" type="text" placeholder="Enter your last name" />
-                                                    <label for="inputLastName">Last name</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputEmail" name="email" type="email"  placeholder="name@example.com" />
-                                            <label for="inputEmail">Email address</label>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="inputPassword" name="pwd" type="password" placeholder="Create a password" />
-                                                    <label for="inputPassword">Password</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="inputPasswordConfirm" name="pwdConfirm" type="password" placeholder="Confirm password" />
-                                                    <label for="inputPasswordConfirm">Confirm Password</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-4 mb-0">
-                                            <div class="d-grid"><button type="submit" class="btn btn-primary btn-block">Create Account</button></div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="card-footer text-center py-3">
-                                    <div class="small"><a th:href="@{/user/login}">Have an account? Go to login</a></div>
-                                </div>
+                            </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input class="form-control" id="inputEmail" name="email" type="email"
+                                    placeholder="name@example.com" />
+                                <label for="inputEmail">Email address</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-center">
+                            <button type="button" class="btn btn-secondary w-100 h-100" id="btnSendCode">인증번호
+                                받기</button>
+                        </div>
+                    </div>
+                    <div class="row mb-3" id="verificationArea" style="display:none;">
+                        <div class="col-md-8">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input class="form-control" id="inputVerificationCode" type="text"
+                                    placeholder="Enter code" />
+                                <label for="inputVerificationCode">Verification Code</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-center">
+                            <button type="button" class="btn btn-success w-100 h-100" id="btnVerifyCode">인증확인</button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="isEmailVerified" value="false">
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input class="form-control" id="inputPassword" name="pwd" type="password"
+                                    placeholder="Create a password" />
+                                <label for="inputPassword">Password</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input class="form-control" id="inputPasswordConfirm" name="pwdConfirm" type="password"
+                                    placeholder="Confirm password" />
+                                <label for="inputPasswordConfirm">Confirm Password</label>
                             </div>
                         </div>
                     </div>
+                    <div class="mt-4 mb-0">
+                        <div class="d-grid"><button type="submit" class="btn btn-primary btn-block"
+                                id="btnSubmit">Create Account</button></div>
+                    </div>
+                    </form>
                 </div>
-            </main>
+                <div class="card-footer text-center py-3">
+                    <div class="small"><a th:href="@{/user/login}">Have an account? Go to login</a></div>
+                </div>
+            </div>
         </div>
     </div>
-    <script>
-        const password = document.getElementById("inputPassword");
-        const confirm = document.getElementById("inputPasswordConfirm");
+</div>
+<script>
+    const password = document.getElementById("inputPassword");
+    const confirm = document.getElementById("inputPasswordConfirm");
+    const btnSubmit = document.getElementById("btnSubmit");
+    const isEmailVerified = document.getElementById("isEmailVerified");
 
-        function validatePassword() {
-            if (password.value !== confirm.value) {
-                // 브라우저 기본 검증 기능을 사용하여 메시지 표시
-                confirm.setCustomValidity("비밀번호가 일치하지 않습니다.");
-            } else {
-                confirm.setCustomValidity('');
-            }
+    function validatePassword() {
+        if (password.value !== confirm.value) {
+            confirm.setCustomValidity("비밀번호가 일치하지 않습니다.");
+        } else {
+            confirm.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm.onkeyup = validatePassword;
+
+    // 이메일 인증 관련 스크립트
+    document.getElementById('btnSendCode').addEventListener('click', function () {
+        const email = document.getElementById('inputEmail').value;
+        if (!email) {
+            alert('이메일을 입력해주세요.');
+            return;
         }
 
-        // 값이 변경될 때마다 검사
-        password.onchange = validatePassword;
-        confirm.onkeyup = validatePassword;
-    </script>
+        fetch('/user/send-verification?email=' + email, { method: 'POST' })
+            .then(response => {
+                if (response.ok) {
+                    alert('인증코드가 발송되었습니다. 이메일을 확인해주세요.');
+                    document.getElementById('verificationArea').style.display = 'flex';
+                } else {
+                    alert('인증코드 발송 실패.');
+                }
+            });
+    });
+
+    document.getElementById('btnVerifyCode').addEventListener('click', function () {
+        const email = document.getElementById('inputEmail').value;
+        const code = document.getElementById('inputVerificationCode').value;
+
+        fetch('/user/verify-code?email=' + email + '&code=' + code, { method: 'POST' })
+            .then(response => response.json())
+            .then(result => {
+                if (result) {
+                    alert('인증되었습니다.');
+                    isEmailVerified.value = "true";
+                    document.getElementById('inputEmail').readOnly = true;
+                    document.getElementById('verificationArea').style.display = 'none';
+                    document.getElementById('btnSendCode').disabled = true;
+                    document.getElementById('btnSendCode').innerText = "인증완료";
+                } else {
+                    alert('인증코드가 올바르지 않거나 만료되었습니다.');
+                    isEmailVerified.value = "false";
+                }
+            });
+    });
+
+    // 폼 제출 시 인증 여부 확인
+    document.querySelector('form').addEventListener('submit', function (e) {
+        if (isEmailVerified.value !== "true") {
+            e.preventDefault();
+            alert('이메일 인증을 완료해주세요.');
+        }
+    });
+</script>
 </div>

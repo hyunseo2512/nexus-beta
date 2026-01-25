@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
     <meta charset="UTF-8">
     <title>Nexus</title>
     <link rel="icon" th:href="@{/image/nexus-favicon.ico}">
-    <link rel="stylesheet" th:href="@{/dist/css/styles.css}"/> <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/dist/css/styles.css}" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <style>
 
     </style>
@@ -27,33 +27,39 @@
 <!--        }-->
 <!--    });-->
 <!--</script>-->
-<body class="sb-nav-fixed"> <div th:replace="~{fragments/header :: header}"></div>
 
-<div id="layoutSidenav">
+<body class="sb-nav-fixed">
+    <div th:replace="~{fragments/header :: header}"></div>
 
-    <div th:replace="~{fragments/nav :: nav}"></div>
+    <div id="layoutSidenav">
 
-    <div id="layoutSidenav_content">
-        <main>
-            <div layout:fragment="content">
-            </div>
-        </main>
+        <div th:replace="~{fragments/nav :: nav}"></div>
+
+        <div id="layoutSidenav_content">
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+                <i class="fas fa-bars"></i>
+            </button>
+            <main>
+                <div layout:fragment="content">
+                </div>
+            </main>
+        </div>
     </div>
-</div>
 
-<script th:src="@{/dist/js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/dist/js/scripts.js}"></script>
-<script>
-    // scripts.js 또는 layout.html 하단
-    document.addEventListener('DOMContentLoaded', () => {
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        if (sidebarToggle) {
-            sidebarToggle.onclick = function(e) {
-                e.preventDefault();
-                document.body.classList.toggle('sb-sidenav-toggled');
-            };
-        }
-    });
-</script>
+    <script th:src="@{/dist/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/dist/js/scripts.js}"></script>
+    <script>
+        // scripts.js 또는 layout.html 하단
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            if (sidebarToggle) {
+                sidebarToggle.onclick = function (e) {
+                    e.preventDefault();
+                    document.body.classList.toggle('sb-sidenav-toggled');
+                };
+            }
+        });
+    </script>
 </body>
+
 </html>

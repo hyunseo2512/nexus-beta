@@ -16,19 +16,19 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-//    @Transactional
-//    @Override
-//    public String register(UserDTO userDTO) {
-//        userDTO.setPwd(passwordEncoder.encode(userDTO.getPwd()));
-//        User user = convertDtoToEntity(userDTO);
-//        user.addAuth(AuthRole.USER);
-//
-//        return userRepository.save(user).getEmail();
-//    }
+    // @Transactional
+    // @Override
+    // public String register(UserDTO userDTO) {
+    // userDTO.setPwd(passwordEncoder.encode(userDTO.getPwd()));
+    // User user = convertDtoToEntity(userDTO);
+    // user.addAuth(AuthRole.USER);
+    //
+    // return userRepository.save(user).getEmail();
+    // }
 
     @Transactional
     @Override
@@ -38,9 +38,8 @@ public class UserServiceImpl implements UserService{
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        // 2. fName + lName 합쳐서 nickName 설정
-        String fullName = userDTO.getLastName() + userDTO.getFirstName();
-        userDTO.setNickName(fullName);
+        // 2. fName + lName 합쳐서 nickName 설정 -> 제거 (프론트에서 nickName으로 통합해서 옴)
+        // userDTO.setNickName(fullName);
 
         // 3. 비밀번호 암호화
         userDTO.setPwd(passwordEncoder.encode(userDTO.getPwd()));

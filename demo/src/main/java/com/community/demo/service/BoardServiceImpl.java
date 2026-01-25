@@ -27,14 +27,24 @@ public class BoardServiceImpl implements BoardService {
     // 1. 커서 기반 목록 조회 (무한 스크롤용)
     @Override
     @Transactional(readOnly = true)
-    public List<BoardDTO> getListWithCursor(Long lastBno, int size) {
+    public List<BoardDTO> getListWithCursor(Long lastBno, int size, String keyword) {
         Pageable pageable = PageRequest.of(0, size);
         List<Board> result;
 
-        if (lastBno == null || lastBno == 0) {
-            result = boardRepository.findFirstPage(pageable);
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            // 검색어 있는 경우
+            if (lastBno == null || lastBno == 0) {
+                result = boardRepository.findByTitleContainingOrderByBnoDesc(keyword, pageable);
+            } else {
+                result = boardRepository.findByTitleContainingAndBnoLessThanOrderByBnoDesc(keyword, lastBno, pageable);
+            }
         } else {
-            result = boardRepository.findNextPage(lastBno, pageable);
+            // 검색어 없는 경우 (기존 로직)
+            if (lastBno == null || lastBno == 0) {
+                result = boardRepository.findFirstPage(pageable);
+            } else {
+                result = boardRepository.findNextPage(lastBno, pageable);
+            }
         }
 
         // 명확하게 convertBoardToDto 사용 (Board -> BoardDTO)
@@ -75,23 +85,25 @@ public class BoardServiceImpl implements BoardService {
         return boardRepository.save(board).getBno();
     }
 
-//    // 5. 게시글 + 파일 함께 저장
-//    @Override
-//    @Transactional
-//    public Long insert(BoardFileDTO boardFileDTO) {
-//        // 게시글 정보 저장
-//        Board board = boardRepository.save(convertBoardToEntity(boardFileDTO.getBoardDTO()));
-//        Long bno = board.getBno();
-//
-//        // 파일 정보 저장
-//        if (boardFileDTO.getFileList() != null && !boardFileDTO.getFileList().isEmpty()) {
-//            for (FileDTO fileDTO : boardFileDTO.getFileList()) {
-//                fileDTO.setBno(bno); // FK 세팅
-//                fileRepository.save(convertFileToEntity(fileDTO));
-//            }
-//        }
-//        return bno;
-//    }
+    // // 5. 게시글 + 파일 함께 저장
+    // @Override
+    // @Transactional
+    // public Long insert(BoardFileDTO boardFileDTO) {
+    // // 게시글 정보 저장
+    // Board board =
+    // boardRepository.save(convertBoardToEntity(boardFileDTO.getBoardDTO()));
+    // Long bno = board.getBno();
+    //
+    // // 파일 정보 저장
+    // if (boardFileDTO.getFileList() != null &&
+    // !boardFileDTO.getFileList().isEmpty()) {
+    // for (FileDTO fileDTO : boardFileDTO.getFileList()) {
+    // fileDTO.setBno(bno); // FK 세팅
+    // fileRepository.save(convertFileToEntity(fileDTO));
+    // }
+    // }
+    // return bno;
+    // }
 
     @Override
     @Transactional
@@ -121,14 +133,14 @@ public class BoardServiceImpl implements BoardService {
                 .orElse(null);
     }
 
-//    // 7. 특정 게시글의 파일 목록 조회
-//    @Override
-//    @Transactional(readOnly = true)
-//    public List<FileDTO> getFileList(long bno) {
-//        return fileRepository.findAllByBno(bno).stream()
-//                .map(this::convertFileToDto)
-//                .toList();
-//    }
+    // // 7. 특정 게시글의 파일 목록 조회
+    // @Override
+    // @Transactional(readOnly = true)
+    // public List<FileDTO> getFileList(long bno) {
+    // return fileRepository.findAllByBno(bno).stream()
+    // .map(this::convertFileToDto)
+    // .toList();
+    // }
     // BoardServiceImpl.java 내 관련 메서드 수정
     @Override
     @Transactional(readOnly = true)

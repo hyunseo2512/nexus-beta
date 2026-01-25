@@ -21,9 +21,10 @@ public class HomeController {
 
     @GetMapping("/")
     public String index(@RequestParam(value = "lastBno", required = false) Long lastBno,
+            @RequestParam(value = "keyword", required = false) String keyword,
             HttpServletRequest request, Model model) {
 
-        List<BoardDTO> boardList = boardService.getListWithCursor(lastBno, 5);
+        List<BoardDTO> boardList = boardService.getListWithCursor(lastBno, 5, keyword);
         model.addAttribute("boardList", boardList);
 
         // AJAX(무한스크롤) 요청일 때만 프래그먼트 리턴

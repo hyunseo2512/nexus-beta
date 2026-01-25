@@ -19,4 +19,13 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     // 2페이지부터 (lastBno 기준)
     @Query("SELECT b FROM Board b WHERE b.bno < :lastBno ORDER BY b.bno DESC")
     List<Board> findNextPage(@Param("lastBno") Long lastBno, Pageable pageable);
+
+    // 검색 (첫 페이지)
+    @Query("SELECT b FROM Board b WHERE b.title LIKE %:keyword% ORDER BY b.bno DESC")
+    List<Board> findByTitleContainingOrderByBnoDesc(@Param("keyword") String keyword, Pageable pageable);
+
+    // 검색 (2페이지부터)
+    @Query("SELECT b FROM Board b WHERE b.title LIKE %:keyword% AND b.bno < :lastBno ORDER BY b.bno DESC")
+    List<Board> findByTitleContainingAndBnoLessThanOrderByBnoDesc(@Param("keyword") String keyword,
+            @Param("lastBno") Long lastBno, Pageable pageable);
 }

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public interface BoardService {
 
     // [1] Board 변환 메서드
-    default Board convertBoardToEntity(BoardDTO boardDTO){
+    default Board convertBoardToEntity(BoardDTO boardDTO) {
         return Board.builder()
                 .bno(boardDTO.getBno())
                 .title(boardDTO.getTitle())
@@ -35,15 +35,14 @@ public interface BoardService {
                 .fileQty(board.getFileQty())
                 .regDate(board.getRegDate())
                 .modDate(board.getModDate())
-                .fileList(board.getFileList() != null ?
-                        board.getFileList().stream()
-                                .map(this::convertFileToDto)
-                                .collect(Collectors.toList()) : null)
+                .fileList(board.getFileList() != null ? board.getFileList().stream()
+                        .map(this::convertFileToDto)
+                        .collect(Collectors.toList()) : null)
                 .build();
     }
 
     // [2] File 변환 메서드 (형변환 및 bno 중복 방지 반영)
-    default File convertFileToEntity(FileDTO fileDTO){
+    default File convertFileToEntity(FileDTO fileDTO) {
         return File.builder()
                 .uuid(fileDTO.getUuid())
                 .saveDir(fileDTO.getSaveDir())
@@ -55,7 +54,7 @@ public interface BoardService {
                 .build();
     }
 
-    default FileDTO convertFileToDto(File file){
+    default FileDTO convertFileToDto(File file) {
         return FileDTO.builder()
                 .uuid(file.getUuid())
                 .saveDir(file.getSaveDir())
@@ -72,10 +71,16 @@ public interface BoardService {
 
     /* 추상 메서드들 */
     Long insert(BoardDTO boardDTO);
+
     List<BoardDTO> getList();
+
     BoardDTO getDetail(long bno);
+
     Long insert(BoardFileDTO boardFileDTO);
+
     List<FileDTO> getTodayFileList(String today);
+
     List<FileDTO> getFileList(long bno);
-    List<BoardDTO> getListWithCursor(Long lastBno, int size);
+
+    List<BoardDTO> getListWithCursor(Long lastBno, int size, String keyword);
 }

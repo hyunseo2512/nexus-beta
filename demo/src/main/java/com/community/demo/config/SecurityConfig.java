@@ -50,7 +50,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/user/list").hasAnyRole("ADMIN")
-                        .requestMatchers("/", "/dist/**", "/js/**", "/image/**", "/upload/**",
+                        .requestMatchers("/", "/dist/**", "/plugins/**", "/css/**", "/images/**", "/image/**", "/js/**",
+                                "/upload/**", "/h2-console/**", "/user/password",
                                 "/board/detail", "/comment/list/**",
                                 "/user/join", "/user/login", "/error/**", "/view",
                                 "/chat", "/ws-chat/**")

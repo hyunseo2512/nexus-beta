@@ -15,9 +15,9 @@ public class UserDTO {
     private String email;
     private String pwd;
 
-
-    private String firstName;
-    private String lastName;
+    // Name 필드 통합 (nickName 사용)
+    // private String firstName;
+    // private String lastName;
     private String pwdConfirm;
 
     private String nickName;
